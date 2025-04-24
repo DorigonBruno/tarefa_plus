@@ -13,6 +13,7 @@ export default function Home() {
           src={logo}
           alt="logo do tarefa plus"
           className="block w-full max-w-xs md:max-w-xl object-cover"
+          priority
         />
 
         <h1 className="font-bold text-xl md:text-4xl max-w-2xl text-center my-10">
