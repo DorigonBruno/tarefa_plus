@@ -21,9 +21,18 @@ type DashboradProps = {
   };
 };
 
+type TasksProps = {
+  id: string;
+  tarefa: string;
+  user: string;
+  public: boolean;
+  created: Date;
+};
+
 export default function Dashboard({ user }: DashboradProps) {
   const [textArea, setTextArea] = useState("");
   const [publicTask, setPublicTask] = useState(false);
+  const [tasks, setTasks] = useState<TasksProps[]>([]);
 
   function handleChangeTask(e: ChangeEvent<HTMLInputElement>) {
     setPublicTask(e.target.checked);
@@ -52,9 +61,39 @@ export default function Dashboard({ user }: DashboradProps) {
     }
   }
 
+  useEffect(() => {
+    async function requestTasks() {
+      const tasksRef = collection(db, "tarefas");
+
+      const q = query(
+        tasksRef,
+        orderBy("created", "desc"),
+        where("user", "==", user?.email)
+      );
+
+      onSnapshot(q, (snapshot) => {
+        const list = [] as TasksProps[];
+
+        snapshot.forEach((doc) => {
+          list.push({
+            created: doc.data().created,
+            public: doc.data().public,
+            tarefa: doc.data().tarefa,
+            user: doc.data().user,
+            id: doc.id,
+          });
+        });
+
+        setTasks(list);
+      });
+    }
+
+    requestTasks();
+  }, [user?.email]);
+
   return (
-    <div className="h-screen w-full">
-      <main className="w-full h-6/12 max-w-5xl flex flex-col p-1 m-auto md:mt-10 mt-4">
+    <div className="h-full w-full">
+      <main className="w-full h-auto max-w-5xl flex flex-col p-1 m-auto md:mt-10 mt-4">
         <h1 className="text-2xl mb-3">Qual sua Tarefa?</h1>
         <form onSubmit={handleSubmit}>
           <TextArea
@@ -88,34 +127,39 @@ export default function Dashboard({ user }: DashboradProps) {
         </form>
       </main>
 
-      <section className="bg-white w-full h-6/12 text-black">
+      <section className="bg-white w-full h-auto text-black mt-10">
         <div className="w-full max-w-5xl p-1 m-auto">
           <h1 className="text-center my-3 text-2xl md:my-5 md:text-4xl font-bold">
             Minhas Tarefas
           </h1>
 
           <div className="flex flex-col gap-2 mb-2">
-            <article className="border p-4 rounded-md border-gray-300">
-              <div className="flex justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <span className="bg-blue-500 text-white p-1 text-xs md:text-sm rounded-md">
-                    Pública
-                  </span>
+            {tasks.map((task) => (
+              <article
+                key={task.id}
+                className="border p-4 rounded-md border-gray-300"
+              >
+                {task.public && (
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="bg-blue-500 p-0.5 text-white rounded-sm text-xs md:text-sm">
+                      Publica
+                    </span>
+                    <button>
+                      <FaShare size={18} className="text-blue-500" />
+                    </button>
+                  </div>
+                )}
+
+                <div className="flex items-center justify-between">
+                  <p className="whitespace-pre-wrap text-base font-medium">
+                    {task.tarefa}
+                  </p>
                   <button className="cursor-pointer">
-                    <FaShare size={22} className="text-blue-500" />
+                    <FaTrash size={24} className="text-red-500" />
                   </button>
                 </div>
-
-                <button className="cursor-pointer">
-                  <FaTrash size={24} className="text-red-500" />
-                </button>
-              </div>
-
-              <p className="whitespace-pre-wrap">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Delectus, corrupti architecto. Adipisci facere assumenda
-              </p>
-            </article>
+              </article>
+            ))}
           </div>
         </div>
       </section>
