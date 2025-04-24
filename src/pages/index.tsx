@@ -4,11 +4,11 @@ import Head from "next/head";
 
 export default function Home() {
   return (
-    <>
+    <div className="bg-black">
       <Head>
         <title>Tarefas Plus</title>
       </Head>
-      <main className="w-full h-screen overflow-hidden max-w-6xl m-auto p-1 flex flex-col justify-center items-center md:gap-2">
+      <main className="w-full h-screen overflow-hidden max-w-6xl m-auto p-1 flex flex-col justify-center items-center md:gap-2 text-white">
         <Image
           src={logo}
           alt="logo do tarefa plus"
@@ -32,6 +32,6 @@ export default function Home() {
           </button>
         </div>
       </main>
-    </>
+    </div>
   );
 }

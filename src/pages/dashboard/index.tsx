@@ -13,6 +13,7 @@ import {
   where,
   orderBy,
   doc,
+  deleteDoc,
 } from "firebase/firestore";
 
 type DashboradProps = {
@@ -61,6 +62,13 @@ export default function Dashboard({ user }: DashboradProps) {
     }
   }
 
+  async function handleDeleteTasks(id: string) {
+    const docRef = doc(db, "tarefas", id);
+
+    alert("Tarefa Excluida");
+    await deleteDoc(docRef);
+  }
+
   useEffect(() => {
     async function requestTasks() {
       const tasksRef = collection(db, "tarefas");
@@ -92,9 +100,9 @@ export default function Dashboard({ user }: DashboradProps) {
   }, [user?.email]);
 
   return (
-    <div className="h-full w-full">
-      <main className="w-full h-auto max-w-5xl flex flex-col p-1 m-auto md:mt-10 mt-4">
-        <h1 className="text-2xl mb-3">Qual sua Tarefa?</h1>
+    <div className="h-screen w-full bg-black flex flex-col overflow-y-auto">
+      <main className="w-full h-1/2 max-w-5xl flex flex-col p-1 m-auto md:mt-10 mt-4">
+        <h1 className="text-2xl mb-3 text-white">Qual sua Tarefa?</h1>
         <form onSubmit={handleSubmit}>
           <TextArea
             placeholder="Digite a tarefa"
@@ -113,13 +121,13 @@ export default function Dashboard({ user }: DashboradProps) {
               checked={publicTask}
               onChange={handleChangeTask}
             />
-            <label htmlFor="check" className="cursor-pointer">
+            <label htmlFor="check" className="cursor-pointer text-white">
               Deixar Tarefa Pública
             </label>
           </div>
 
           <button
-            className="w-full text-center bg-blue-500 p-2 cursor-pointer mt-2 font-bold rounded-md"
+            className="w-full text-center bg-blue-500 p-2 cursor-pointer mt-2 font-bold rounded-md text-white"
             type="submit"
           >
             Cadastrar Tarefa
@@ -127,7 +135,7 @@ export default function Dashboard({ user }: DashboradProps) {
         </form>
       </main>
 
-      <section className="bg-white w-full h-auto text-black mt-10">
+      <section className="bg-white w-full h-1/2 overflow-y-auto text-black">
         <div className="w-full max-w-5xl p-1 m-auto">
           <h1 className="text-center my-3 text-2xl md:my-5 md:text-4xl font-bold">
             Minhas Tarefas
@@ -145,7 +153,10 @@ export default function Dashboard({ user }: DashboradProps) {
                       Publica
                     </span>
                     <button>
-                      <FaShare size={18} className="text-blue-500" />
+                      <FaShare
+                        size={18}
+                        className="text-blue-500 cursor-pointer"
+                      />
                     </button>
                   </div>
                 )}
@@ -154,7 +165,10 @@ export default function Dashboard({ user }: DashboradProps) {
                   <p className="whitespace-pre-wrap text-base font-medium">
                     {task.tarefa}
                   </p>
-                  <button className="cursor-pointer">
+                  <button
+                    className="cursor-pointer"
+                    onClick={() => handleDeleteTasks(task.id)}
+                  >
                     <FaTrash size={24} className="text-red-500" />
                   </button>
                 </div>
