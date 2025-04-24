@@ -15,6 +15,7 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
+import Link from "next/link";
 
 type DashboradProps = {
   user: {
@@ -100,8 +101,8 @@ export default function Dashboard({ user }: DashboradProps) {
   }, [user?.email]);
 
   return (
-    <div className="h-screen w-full bg-black flex flex-col overflow-y-auto">
-      <main className="w-full h-1/2 max-w-5xl flex flex-col p-1 m-auto md:mt-10 mt-4">
+    <div className="h-screen w-full bg-black flex flex-col">
+      <main className="w-full max-w-5xl flex flex-col p-1 m-auto md:mt-10 mt-4">
         <h1 className="text-2xl mb-3 text-white">Qual sua Tarefa?</h1>
         <form onSubmit={handleSubmit}>
           <TextArea
@@ -135,7 +136,7 @@ export default function Dashboard({ user }: DashboradProps) {
         </form>
       </main>
 
-      <section className="bg-white w-full h-1/2 overflow-y-auto text-black">
+      <section className="bg-white w-full text-black mt-10">
         <div className="w-full max-w-5xl p-1 m-auto">
           <h1 className="text-center my-3 text-2xl md:my-5 md:text-4xl font-bold">
             Minhas Tarefas
@@ -162,9 +163,11 @@ export default function Dashboard({ user }: DashboradProps) {
                 )}
 
                 <div className="flex items-center justify-between">
-                  <p className="whitespace-pre-wrap text-base font-medium">
-                    {task.tarefa}
-                  </p>
+                  <Link href={`/tasks/${task.id}`}>
+                    <p className="whitespace-pre-wrap text-base font-medium">
+                      {task.tarefa}
+                    </p>
+                  </Link>
                   <button
                     className="cursor-pointer"
                     onClick={() => handleDeleteTasks(task.id)}
