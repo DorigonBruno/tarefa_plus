@@ -29,6 +29,7 @@ Bom sinta-se a vontade para testar 🚀
 - TypeScript 
 - NextJS
 - Firebase
+- Next Auth JS
 - Google Cloud (tive que fazer algumas configurações para rodar)
 - TailwindCSS
 - React Icons
