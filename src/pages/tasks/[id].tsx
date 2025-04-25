@@ -15,6 +15,7 @@ import TextArea from "@/components/textarea";
 import { ChangeEvent, useState } from "react";
 import { useSession } from "next-auth/react";
 import { FaTrash } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 type TasksProps = {
   item: {
@@ -42,7 +43,7 @@ export default function Tasks({ item, allComments }: TasksProps) {
 
   async function handleAddComment() {
     if (textArea === "") {
-      alert("Digite algum comentário");
+      toast.error("Digite algum comentário");
       return;
     }
 
@@ -65,7 +66,7 @@ export default function Tasks({ item, allComments }: TasksProps) {
         taskId: item?.taskId,
       };
 
-      alert("Comentário cadastrado");
+      toast.success("Comentário cadastrado");
       setComments((prev) => [...prev, data]);
       setTextArea("");
     } catch (error) {
@@ -80,7 +81,7 @@ export default function Tasks({ item, allComments }: TasksProps) {
       const docRef = doc(db, "comentarios", id);
 
       await deleteDoc(docRef);
-      alert("comentário deletado");
+      toast.error("comentário deletado");
       setComments(commentFilter);
     } catch (err) {
       console.log(err);

@@ -18,6 +18,8 @@ import {
 import Link from "next/link";
 import Head from "next/head";
 
+import toast from "react-hot-toast";
+
 type DashboradProps = {
   user: {
     email: string;
@@ -56,7 +58,7 @@ export default function Dashboard({ user }: DashboradProps) {
         public: publicTask,
       });
 
-      alert("Tarefa Cadastrada");
+      toast.success("Tarefa Cadastrada");
       setTextArea("");
       setPublicTask(false);
     } catch (err) {
@@ -67,7 +69,7 @@ export default function Dashboard({ user }: DashboradProps) {
   async function handleDeleteTasks(id: string) {
     const docRef = doc(db, "tarefas", id);
 
-    alert("Tarefa Excluida");
+    toast.error("Tarefa Excluida");
     await deleteDoc(docRef);
   }
 
