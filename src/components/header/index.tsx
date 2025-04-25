@@ -6,7 +6,7 @@ export default function Header() {
 
   return (
     <header className="w-full text-white bg-black">
-      <div className="flex justify-between items-center p-2 mt-6 w-full max-w-5xl m-auto">
+      <div className="flex justify-between items-center p-2 mt-2 md:mt-6 w-full max-w-5xl m-auto">
         <div className="flex items-center gap-2 flex-wrap">
           <Link href="/">
             <h1 className="text-2xl md:text-4xl flex items-center font-bold">

@@ -16,6 +16,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import Link from "next/link";
+import Head from "next/head";
 
 type DashboradProps = {
   user: {
@@ -102,6 +103,9 @@ export default function Dashboard({ user }: DashboradProps) {
 
   return (
     <div className="h-screen w-full bg-black flex flex-col">
+      <Head>
+        <title>Dashboard</title>
+      </Head>
       <main className="w-full max-w-5xl flex flex-col p-1 m-auto md:mt-10 mt-4">
         <h1 className="text-2xl mb-3 text-white">Qual sua Tarefa?</h1>
         <form onSubmit={handleSubmit}>
