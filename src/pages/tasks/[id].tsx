@@ -113,21 +113,13 @@ export default function Tasks({ item, allComments }: TasksProps) {
             }
           />
 
-          {session?.user ? (
-            <button
-              className="w-full bg-blue-500 text-white font-bold rounded-md p-2 mt-2 cursor-pointer text-sm md:text-lg"
-              onClick={handleAddComment}
-            >
-              Enviar Comentário
-            </button>
-          ) : (
-            <button
-              className="w-full bg-blue-500 text-white font-bold rounded-md p-2 mt-2 cursor-pointer text-sm md:text-lg disabled:cursor-not-allowed"
-              onClick={handleAddComment}
-            >
-              Enviar Comentário
-            </button>
-          )}
+          <button
+            className="w-full bg-blue-500 text-white font-bold rounded-md p-2 mt-2 cursor-pointer text-sm md:text-lg"
+            onClick={handleAddComment}
+            disabled={!session?.user}
+          >
+            Enviar Comentário
+          </button>
         </form>
 
         <section className="mt-8 md:mt-16">
