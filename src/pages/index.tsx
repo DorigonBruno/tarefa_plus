@@ -1,8 +1,17 @@
+import { GetStaticProps } from "next";
 import Image from "next/image";
 import logo from "../../public/assets/hero.png";
 import Head from "next/head";
 
-export default function Home() {
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../services/firebaseConnection";
+
+type HomeProps = {
+  posts: number;
+  comments: number;
+};
+
+export default function Home({ posts, comments }: HomeProps) {
   return (
     <div className="bg-black">
       <Head>
@@ -25,13 +34,29 @@ export default function Home() {
             className="bg-foreground text-black rounded-lg
            py-2 px-8"
           >
-            +7 mil posts
+            +{posts} posts
           </button>
           <button className="bg-foreground text-black rounded-lg py-2 px-8">
-            + 1 mil comentários
+            +{comments} comentários
           </button>
         </div>
       </main>
     </div>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  const commentRef = collection(db, "comentarios");
+  const commentSnapshot = await getDocs(commentRef);
+
+  const postRef = collection(db, "tarefas");
+  const postSnapshot = await getDocs(postRef);
+
+  return {
+    props: {
+      posts: postSnapshot.size || 0,
+      comments: commentSnapshot.size || 0,
+    },
+    revalidate: 60,
+  };
+};

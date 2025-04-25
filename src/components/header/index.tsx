@@ -16,7 +16,7 @@ export default function Header() {
 
           {session?.user && (
             <Link href="/dashboard">
-              <button className="cursor-pointer bg-white text-black rounded-md py-1 px-2">
+              <button className="cursor-pointer bg-white text-black rounded-md py-1 px-2 text-xs md:text-lg mt-2">
                 Meu Painel
               </button>
             </Link>
