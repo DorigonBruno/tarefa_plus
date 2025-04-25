@@ -9,6 +9,7 @@ import {
   query,
   where,
   getDocs,
+  deleteDoc,
 } from "firebase/firestore";
 import TextArea from "@/components/textarea";
 import { ChangeEvent, useState } from "react";
@@ -72,6 +73,20 @@ export default function Tasks({ item, allComments }: TasksProps) {
     }
   }
 
+  async function handleDeleteComment(id: string) {
+    const commentFilter = comments.filter((comment) => comment.id !== id);
+
+    try {
+      const docRef = doc(db, "comentarios", id);
+
+      await deleteDoc(docRef);
+      alert("comentário deletado");
+      setComments(commentFilter);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div className="w-full h-full bg-white pt-10 pb-30">
       <Head>
@@ -116,9 +131,15 @@ export default function Tasks({ item, allComments }: TasksProps) {
                   <span className="bg-slate-500 text-white py-1 px-2 rounded-full text-xs">
                     {comment.name}
                   </span>
-                  <button className="cursor-pointer">
-                    <FaTrash size={14} className="text-red-500" />
-                  </button>
+
+                  {comment.user === session?.user?.email && (
+                    <button
+                      className="cursor-pointer"
+                      onClick={() => handleDeleteComment(comment.id)}
+                    >
+                      <FaTrash size={14} className="text-red-500" />
+                    </button>
+                  )}
                 </div>
                 <p className="whitespace-pre-wrap">{comment.comment}</p>
               </article>
