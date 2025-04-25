@@ -114,7 +114,11 @@ export default function Tasks({ item, allComments }: TasksProps) {
           />
 
           <button
-            className="w-full bg-blue-500 text-white font-bold rounded-md p-2 mt-2 cursor-pointer text-sm md:text-lg"
+            className={`w-full bg-blue-500 text-white font-bold rounded-md p-2 mt-2 cursor-pointer text-sm md:text-lg ${
+              !session?.user
+                ? "disabled:cursor-not-allowed opacity-50"
+                : "cursor-pointer"
+            }`}
             onClick={handleAddComment}
             disabled={!session?.user}
           >
