@@ -5,7 +5,7 @@ export default function Header() {
   const { data: session, status } = useSession();
 
   return (
-    <header className="w-full text-white bg-black">
+    <header className="w-full text-white bg-black mb-4">
       <div className="flex justify-between items-center p-2 mt-2 md:mt-6 w-full max-w-5xl m-auto">
         <div className="flex items-center gap-2 flex-wrap">
           <Link href="/">

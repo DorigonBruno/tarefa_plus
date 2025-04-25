@@ -13,6 +13,7 @@ import {
 import TextArea from "@/components/textarea";
 import { ChangeEvent, useState } from "react";
 import { useSession } from "next-auth/react";
+import { FaTrash } from "react-icons/fa";
 
 type TasksProps = {
   item: {
@@ -101,25 +102,28 @@ export default function Tasks({ item, allComments }: TasksProps) {
           </button>
         </form>
 
-        <section className="mt-10">
+        <section className="mt-16">
           <h2 className="font-bold text-2xl mb-2">Todos os Comentários</h2>
           <div className="flex flex-col gap-3">
-            <article className="border p-4 rounded-md border-gray-300">
-              <div className="mb-1">
-                <span className="bg-slate-500 text-white py-1 px-2 rounded-full text-xs">
-                  Bruno Dorigon
-                </span>
-              </div>
-              <p className="whitespace-pre-wrap">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea
-                reiciendis quam perferendis itaque mollitia rerum delectus,
-                optio accusantium obcaecati consequatur. Nihil adipisci, magnam
-                harum commodi minus repellat eaque. Exercitationem, quidem.
-              </p>
-            </article>
-          </div>
+            {comments.length === 0 && <p>Nenhum comentário encontrado...</p>}
 
-          <h2>Testando commit agora</h2>
+            {comments.map((comment) => (
+              <article
+                className="border p-4 rounded-md border-gray-300"
+                key={comment.id}
+              >
+                <div className="mb-1 flex items-center justify-between">
+                  <span className="bg-slate-500 text-white py-1 px-2 rounded-full text-xs">
+                    {comment.name}
+                  </span>
+                  <button className="cursor-pointer">
+                    <FaTrash size={14} className="text-red-500" />
+                  </button>
+                </div>
+                <p className="whitespace-pre-wrap">{comment.comment}</p>
+              </article>
+            ))}
+          </div>
         </section>
       </main>
     </div>
