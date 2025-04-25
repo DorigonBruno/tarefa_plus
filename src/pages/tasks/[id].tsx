@@ -88,7 +88,7 @@ export default function Tasks({ item, allComments }: TasksProps) {
   }
 
   return (
-    <div className="w-full h-full bg-white pt-10 pb-30">
+    <div className="w-full h-full bg-white pt-10 pb-30 px-2">
       <Head>
         <title>Tasks - Comentários</title>
       </Head>
@@ -98,8 +98,10 @@ export default function Tasks({ item, allComments }: TasksProps) {
           <p className="font-medium whitespace-pre-wrap">{item.tarefa}</p>
         </article>
 
-        <form className="mt-10">
-          <h1 className="font-bold text-3xl mb-2">Deixar Comentário</h1>
+        <form className="mt-5 md:mt-10">
+          <h1 className="font-bold text-xl md:text-3xl mb-2">
+            Deixar Comentário
+          </h1>
 
           <TextArea
             placeholder="Digite seu Comentário"
@@ -110,15 +112,17 @@ export default function Tasks({ item, allComments }: TasksProps) {
             }
           />
           <button
-            className="w-full bg-blue-500 text-white font-bold rounded-md p-2 mt-2 cursor-pointer"
+            className="w-full bg-blue-500 text-white font-bold rounded-md p-2 mt-2 cursor-pointer text-sm md:text-lg"
             onClick={handleAddComment}
           >
             Enviar Comentário
           </button>
         </form>
 
-        <section className="mt-16">
-          <h2 className="font-bold text-2xl mb-2">Todos os Comentários</h2>
+        <section className="mt-8 md:mt-16">
+          <h2 className="font-bold text-lg md:text-2xl mb-2">
+            Todos os Comentários
+          </h2>
           <div className="flex flex-col gap-3">
             {comments.length === 0 && <p>Nenhum comentário encontrado...</p>}
 
