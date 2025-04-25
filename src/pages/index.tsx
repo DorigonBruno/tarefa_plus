@@ -32,11 +32,11 @@ export default function Home({ posts, comments }: HomeProps) {
         <div className="w-full flex flex-col md:flex-row md:justify-center gap-2 md:gap-20">
           <button
             className="bg-foreground text-black rounded-lg
-           py-2 px-8"
+           py-2 px-8 hover:scale-110 transition-all ease-in-out font-medium"
           >
             +{posts} posts
           </button>
-          <button className="bg-foreground text-black rounded-lg py-2 px-8">
+          <button className="bg-foreground text-black rounded-lg py-2 px-8 hover:scale-110 transition-all ease-in-out font-medium">
             +{comments} comentários
           </button>
         </div>
